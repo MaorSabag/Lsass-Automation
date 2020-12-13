@@ -1,4 +1,4 @@
-# lsass_automation
+# lsass Automation
 > Original Author: Maor Sabag
 
 
