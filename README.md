@@ -2,7 +2,7 @@
 > Original Author: Maor Sabag
 
 
-A python script to automate the NTLM hash dumping form the Lsass process
+A python script to automate the NTLM hash dumping from the Lsass process
 
 
 # Dependencies
