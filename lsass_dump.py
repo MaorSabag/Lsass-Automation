@@ -3,6 +3,7 @@ import subprocess
 import sys
 import wexpect
 import time
+import platform
 
 def logBanner():
     banner =r"""
@@ -19,6 +20,9 @@ Lsass Automation! Made by Exotic!! v1.0
                                                      
 """
     return banner
+
+def is_windows():
+    return platform.system() == 'Windows'
 
 def is_admin():
     check_admin = subprocess.run('net session' ,shell = True, text = True, capture_output = True)
@@ -90,6 +94,10 @@ def mimi_examine():
 def main():
     os.system('cls')
     print(logBanner())
+    if not is_windows():
+        print("[-] You need to run the script in windows OS")
+        print("[-] Exiting...")
+        exit(0)
     current_dir = os.getcwd()
     if not is_admin():
         print("[-] You need to run the script as Administrator")
