@@ -3,7 +3,6 @@
 
 
 A python script to automate the NTLM hash dumping form the Lsass process
-The Usage is easy, first of all you have to run the script on a windows OS.
 
 
 # Dependencies
