@@ -9,6 +9,7 @@ A python script to automate the NTLM hash dumping from the Lsass process
 
 ```
 pip3 install -r requirements.txt
+installing Mimikatz on your PC
 ```
 
 # Usage
