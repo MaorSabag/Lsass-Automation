@@ -149,7 +149,7 @@ def main():
     mimikatz_dumping(lsass_path, current_dir)
     os.chdir(current_dir)
     cred_file = mimi_examine()
-    if cred_file not None:
+    if not(cred_file == None):
         for cred in cred_file:
             if cred.startswith('Username:'):
                 print('\n')
